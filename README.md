@@ -19,8 +19,8 @@ The following variants are available:
 The following tags are merely concise aliases for more specific tags:
 
 - `adamrehn/ue4-runtime`:**latest** is an alias for `adamrehn/ue4-runtime`:**base-opengl**
-- `adamrehn/ue4-runtime`:**tensorflow** is an alias for `adamrehn/ue4-runtime`:**tensorflow-1.13.1**
 - `adamrehn/ue4-runtime`:**virtualgl** is an alias for `adamrehn/ue4-runtime`:**virtualgl-opengl**
+- `adamrehn/ue4-runtime`:**tensorflow** is an alias for `adamrehn/ue4-runtime`:**tensorflow-1.13.1**
 - `adamrehn/ue4-runtime`:**tensorflow-virtualgl** is an alias for `adamrehn/ue4-runtime`:**tensorflow-1.13.1-virtualgl**
 
 For details on using these images to perform cloud rendering via NVIDIA Docker, see the [Cloud rendering guide](https://adamrehn.com/docs/ue4-docker/use-cases/cloud-rendering) from the ue4-docker documentation.
@@ -37,4 +37,4 @@ To build the images, simply run `build.py`. This will automatically query Docker
 
 Copyright &copy; 2019, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](https://github.com/adamrehn/ue4-runtime/blob/master/LICENSE) for details.
 
-Development of the TensorFlow image was funded by [Deepdrive, Inc](https://deepdrive.io/).
+Development of the TensorFlow image variant was funded by [Deepdrive, Inc](https://deepdrive.io/).
