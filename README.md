@@ -10,9 +10,11 @@ The following variants are available:
 - `adamrehn/ue4-runtime`:**base-opengl** is a base image with OpenGL support
 - `adamrehn/ue4-runtime`:**base-cudagl9.2** is a base image with OpenGL + CUDA 9.2 support
 - `adamrehn/ue4-runtime`:**base-cudagl10.0** is a base image with OpenGL + CUDA 10.0 support
+- `adamrehn/ue4-runtime`:**base-cudagl10.1** is a base image with OpenGL + CUDA 10.1 support
 - `adamrehn/ue4-runtime`:**virtualgl-opengl** extends the base OpenGL image with VirtualGL
 - `adamrehn/ue4-runtime`:**virtualgl-cudagl9.2** extends the base CUDA 9.2 image with VirtualGL
 - `adamrehn/ue4-runtime`:**virtualgl-cudagl10.0** extends the base CUDA 10.0 image with VirtualGL
+- `adamrehn/ue4-runtime`:**virtualgl-cudagl10.1** extends the base CUDA 10.1 image with VirtualGL
 - `adamrehn/ue4-runtime`:**tensorflow-1.13.1** extends the base CUDA 10.0 image with TensorFlow 1.13.1
 - `adamrehn/ue4-runtime`:**tensorflow-1.13.1-virtualgl** extends the TensorFlow 1.13.1 image with VirtualGL
 
@@ -42,7 +44,7 @@ docker run --runtime=nvidia -v/tmp/.X11-unix:/tmp/.X11-unix:rw -e DISPLAY adamre
 
 The manner in which you need to invoke UE4 projects inside the container depends on your use case:
 
-- If you are running the container locally on a machine with an OpenGL-enabled X11 configuration (e.g. a standard desktop installation of Ubuntu 18.04) then the [GLVND](https://github.com/NVIDIA/libglvnd) dispatch library provided by the NVIDIA base images will handle the relevant OpenGL function calls without the need for using VirtualGL. **Running UE4 projects via `vglrun` in this scenario will actually reduce performance** due to the additional interposition overheads, so be sure to run projects directly. (e.g. `./MyProject.sh`)
+- If you are running the container locally on a machine with an OpenGL-enabled X11 configuration (e.g. a standard desktop installation of Ubuntu 18.04) then the [GLVND](https://github.com/NVIDIA/libglvnd) dispatch library provided by the NVIDIA base images will handle the relevant OpenGL function calls without the need to use VirtualGL. **Running UE4 projects via `vglrun` in this scenario will actually reduce performance** due to the additional interposition overheads, so be sure to run projects directly. (e.g. `./MyProject.sh`)
 
 - If you are running the container on a remote host and are using X11 forwarding to display the window on your local machine then you will need to run UE4 projects via `vglrun` in order to ensure OpenGL functionality will work from within an SSH session. (e.g. `vglrun ./MyProject.sh`)
 
