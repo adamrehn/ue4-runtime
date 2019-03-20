@@ -3,7 +3,7 @@ Container images for running packaged UE4 projects
 
 The various tags of the [adamrehn/ue4-runtime](https://hub.docker.com/r/adamrehn/ue4-runtime) image provide minimal, pre-configured environments for running packaged Unreal Engine projects with full GPU acceleration via [NVIDIA Docker](https://github.com/NVIDIA/nvidia-docker). (For more details on NVIDIA Docker, see the [NVIDIA Docker primer](https://adamrehn.com/docs/ue4-docker/read-these-first/nvidia-docker-primer) from the ue4-docker documentation.) Note that these images will work with packaged Linux builds **from any source**, not just builds packaged using the container images from the [ue4-docker](https://github.com/adamrehn/ue4-docker) project.
 
-Both OpenGL and OpenGL+CUDA variants are provided, along with preconfigured images for common GPU-accelerated frameworks such as [TensorFlow](https://www.tensorflow.org/). Each image variant is also available in a configuration with [VirtualGL](https://www.virtualgl.org/) bundled for displaying the output of OpenGL applications using the host system's display. See the section [Using the VirtualGL images](#using-the-VirtualGL-images) for usage details.
+Both OpenGL and OpenGL+CUDA variants are provided, along with preconfigured images for common GPU-accelerated frameworks such as [TensorFlow](https://www.tensorflow.org/). Each image variant is also available in a configuration with [VirtualGL](https://www.virtualgl.org/) bundled for displaying the output of OpenGL applications using the host system's display. See the section [Using the VirtualGL images](#using-the-virtualgl-images) for usage details.
 
 The following variants are available:
 
