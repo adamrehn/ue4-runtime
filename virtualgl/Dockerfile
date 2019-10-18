@@ -30,7 +30,7 @@ rm -rf /var/lib/apt/lists/*
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display
 ARG VIRTUALGL_VERSION=2.6.1
 RUN cd /tmp && \
-	curl -fsSL -O https://svwh.dl.sourceforge.net/project/virtualgl/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
+	curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \
 	dpkg -i *.deb && \
 	rm -f /tmp/*.deb
 USER ue4
