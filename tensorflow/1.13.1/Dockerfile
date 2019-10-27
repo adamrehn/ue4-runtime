@@ -1,4 +1,5 @@
-FROM adamrehn/ue4-runtime:base-cudagl10.0
+ARG BASEIMAGE
+FROM adamrehn/ue4-runtime:${BASEIMAGE}-cudagl10.0
 
 # Ensure we are using a UTF-8 locale, as per the official TensorFlow Dockerfiles
 ENV LANG C.UTF-8
@@ -6,14 +7,15 @@ ENV LANG C.UTF-8
 # Install the TensorFlow dependencies not provided by the base image
 # (Adapted from <https://github.com/tensorflow/tensorflow/blob/v1.13.1/tensorflow/tools/dockerfiles/dockerfiles/gpu.Dockerfile>)
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN distro=$(bash -c 'distro=$(. /etc/os-release;echo $VERSION_ID); echo ${distro/./}') && \
+	apt-get update && apt-get install -y --no-install-recommends \
 	build-essential \
 	libcudnn7=7.4.1.5-1+cuda10.0 \
 	libfreetype6-dev \
 	libhdf5-serial-dev \
 	libpng-dev \
 	libzmq3-dev \
-	nvinfer-runtime-trt-repo-ubuntu1804-5.0.2-ga-cuda10.0 \
+	"nvinfer-runtime-trt-repo-ubuntu${distro}-5.0.2-ga-cuda10.0" \
 	pkg-config \
 	python3 \
 	python3-pip \
