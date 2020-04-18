@@ -18,6 +18,7 @@ RUN distro=$(bash -c 'distro=$(. /etc/os-release;echo $VERSION_ID); echo ${distr
 	"nvinfer-runtime-trt-repo-ubuntu${distro}-5.0.2-ga-cuda10.0" \
 	pkg-config \
 	python3 \
+	python3-dev \
 	python3-pip \
 	software-properties-common \
 	unzip && \
