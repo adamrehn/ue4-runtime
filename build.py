@@ -79,7 +79,7 @@ for ubuntuRelease in RELEASES:
 	cudaTags = [tag for tag in listTags('nvidia/cudagl') if tag.endswith(cudaSuffix)]
 	
 	# Generate our list of ue4-runtime image variants and corresponding base images
-	variants = {'opengl': 'nvidia/opengl:1.0-glvnd-runtime-ubuntu{}'.format(ubuntuRelease)}
+	variants = {'vulkan': 'nvidia/opengl:1.0-glvnd-runtime-ubuntu{}'.format(ubuntuRelease)}
 	for tag in cudaTags:
 		variants['cudagl{}'.format(tag.replace(cudaSuffix, ''))] = 'nvidia/cudagl:{}'.format(tag)
 	
@@ -100,17 +100,21 @@ for ubuntuRelease in RELEASES:
 		tag = baseImage + '-virtualgl'
 		built.append(buildImage(join(rootDir, 'virtualgl'), baseImage, tag, args.dry_run))
 
-# Tag the OpenGL variant of the Ubuntu 18.04 base image as our "latest" tag
+# Create OpenGL aliases for our OpenGL+Vulkan images, to maintain backwards compatibility with the tags for the old OpenGL-only images
+for ubuntuRelease in RELEASES:
+	aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ubuntuRelease), '{}:{}-opengl'.format(PREFIX, ubuntuRelease), args.dry_run))
+
+# Tag the Vulkan variant of the Ubuntu 18.04 base image as our "latest" tag
 latest = '{}:latest'.format(PREFIX)
-aliases.append(tagImage('{}:{}-opengl'.format(PREFIX, ALIAS_RELEASE), latest, args.dry_run))
+aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ALIAS_RELEASE), latest, args.dry_run))
 
 # Tag the latest version of TensorFlow without a version suffix
 unversionedTF = '{}:tensorflow'.format(PREFIX)
 aliases.append(tagImage('{}:{}-tensorflow-{}'.format(PREFIX, ALIAS_RELEASE, newestTF), unversionedTF, args.dry_run))
 
-# Tag the OpenGL variant of the VirtualGL image with a non-suffixed tag
+# Tag the Vulkan variant of the VirtualGL image with a non-suffixed tag
 nonSuffixedVgl = '{}:virtualgl'.format(PREFIX)
-aliases.append(tagImage('{}:{}-opengl-virtualgl'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
+aliases.append(tagImage('{}:{}-vulkan-virtualgl'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
 
 # Tag the latest version of `ue4-runtime:tensorflow-virtualgl` without a version suffix
 unversionedVgl = '{}:tensorflow-virtualgl'.format(PREFIX)
