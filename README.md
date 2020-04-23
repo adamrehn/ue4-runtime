@@ -5,7 +5,7 @@ The various tags of the [adamrehn/ue4-runtime](https://hub.docker.com/r/adamrehn
 
 Both OpenGL+Vulkan and OpenGL+Vulkan+CUDA variants are provided, along with preconfigured images for common GPU-accelerated frameworks such as [TensorFlow](https://www.tensorflow.org/). Each image variant is also available in a configuration with [VirtualGL](https://www.virtualgl.org/) bundled for displaying the output of OpenGL applications using the host system's display. See the section [Using the VirtualGL images](#using-the-virtualgl-images) for usage details.
 
-For details on using these images to perform cloud rendering via NVIDIA Docker, see the [Cloud rendering guide](https://unrealcontainers.com/docs/use-cases/cloud-rendering) on the Unreal Containers community hub.
+For details on using these images to perform cloud rendering via NVIDIA Docker, see the [Cloud rendering guide](https://unrealcontainers.com/docs/use-cases/cloud-rendering) on the Unreal Containers community hub. There are also [example Dockerfiles](https://github.com/adamrehn/ue4-example-dockerfiles) available that demonstrate various uses of Unreal Engine containers, including multi-stage build workflows that encapsulate packaged projects in variants of the `ue4-runtime` image.
 
 
 ## Alias tags
