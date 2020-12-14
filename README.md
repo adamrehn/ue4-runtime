@@ -12,12 +12,23 @@ For details on using these images to perform cloud rendering via NVIDIA Docker, 
 
 The following tags are provided as convenient aliases for the fully-qualified tags of common image variants:
 
-- `adamrehn/ue4-runtime`:**latest** is an alias for `adamrehn/ue4-runtime`:**18.04-vulkan**
+- `adamrehn/ue4-runtime`:**latest** is an alias for `adamrehn/ue4-runtime`:**20.04-vulkan**
 - `adamrehn/ue4-runtime`:**16.04-opengl** is an alias for `adamrehn/ue4-runtime`:**16.04-vulkan**
 - `adamrehn/ue4-runtime`:**18.04-opengl** is an alias for `adamrehn/ue4-runtime`:**18.04-vulkan**
+- `adamrehn/ue4-runtime`:**20.04-opengl** is an alias for `adamrehn/ue4-runtime`:**20.04-vulkan**
 - `adamrehn/ue4-runtime`:**tensorflow** is an alias for `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1**
-- `adamrehn/ue4-runtime`:**virtualgl** is an alias for `adamrehn/ue4-runtime`:**18.04-vulkan-virtualgl**
+- `adamrehn/ue4-runtime`:**virtualgl** is an alias for `adamrehn/ue4-runtime`:**20.04-vulkan-virtualgl**
 - `adamrehn/ue4-runtime`:**tensorflow-virtualgl** is an alias for `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1-virtualgl**
+
+
+## Ubuntu 20.04 tags
+
+- `adamrehn/ue4-runtime`:**20.04-vulkan**: Ubuntu 20.04 + OpenGL + Vulkan
+- `adamrehn/ue4-runtime`:**20.04-cudagl11.0**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0
+- `adamrehn/ue4-runtime`:**20.04-cudagl11.1**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1
+- `adamrehn/ue4-runtime`:**20.04-vulkan-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + VirtualGL
+- `adamrehn/ue4-runtime`:**20.04-cudagl11.0-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0 + VirtualGL
+- `adamrehn/ue4-runtime`:**20.04-cudagl11.1-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1 + VirtualGL
 
 
 ## Ubuntu 18.04 tags
@@ -27,12 +38,16 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.0**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.1
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.2**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.2
+- `adamrehn/ue4-runtime`:**18.04-cudagl11.0**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.0
+- `adamrehn/ue4-runtime`:**18.04-cudagl11.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1
 - `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1
 - `adamrehn/ue4-runtime`:**18.04-vulkan-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl9.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 9.2 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.1 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.2 + VirtualGL
+- `adamrehn/ue4-runtime`:**18.04-cudagl11.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.0 + VirtualGL
+- `adamrehn/ue4-runtime`:**18.04-cudagl11.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1 + VirtualGL
 
 
@@ -45,6 +60,8 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.1
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.2**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2
+- `adamrehn/ue4-runtime`:**16.04-cudagl11.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0
+- `adamrehn/ue4-runtime`:**16.04-cudagl11.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1
 - `adamrehn/ue4-runtime`:**16.04-tensorflow-1.13.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1
 - `adamrehn/ue4-runtime`:**16.04-vulkan-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl9.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.0 + VirtualGL
@@ -53,6 +70,8 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.1 + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.2-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2 + VirtualGL
+- `adamrehn/ue4-runtime`:**16.04-cudagl11.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0 + VirtualGL
+- `adamrehn/ue4-runtime`:**16.04-cudagl11.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1 + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-tensorflow-1.13.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1 + VirtualGL
 
 
