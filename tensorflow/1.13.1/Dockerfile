@@ -27,7 +27,7 @@ rm -rf /var/lib/apt/lists/*
 
 # Install the GPU-enabled version of TensorFlow
 # (We split this into two calls to pip to avoid erroring out with "No module named 'setuptools'")
-RUN pip3 install setuptools wheel && pip3 install tensorflow-gpu==1.13.1 
+RUN pip3 install setuptools wheel && pip3 install grpcio==1.19.0 h5py==2.9.0 numpy==1.17.5 tensorflow-gpu==1.13.1
 
 # Revert to our non-root user
 USER ue4
