@@ -13,10 +13,6 @@ RELEASES = ['16.04', '18.04', '20.04']
 # The Ubuntu release that our alias tags point to
 ALIAS_RELEASE = '20.04'
 
-# The Ubuntu release that our TensorFlow alias tags point to
-# (This is the newest version of Ubuntu that supports the CUDA version required by the newest version of TensorFlow)
-ALIAS_RELEASE_TENSORFLOW = '18.04'
-
 
 # Prints and runs a command
 def run(command, dryRun):
@@ -67,10 +63,6 @@ args = parser.parse_args()
 # Compute the absolute path to the root directory containing our Dockerfiles
 rootDir = dirname(abspath(__file__))
 
-# Determine which versions of TensorFlow that we have a Dockerfile for and what the newest version is
-tfVersions = [basename(dirname(v)) for v in glob.glob(join(rootDir, 'tensorflow', '*', 'Dockerfile'))]
-newestTF = sorted([parse(v) for v in tfVersions])[-1]
-
 # Keep track of the list of images we've built and alias tags we've generated
 built = []
 aliases = []
@@ -78,8 +70,8 @@ aliases = []
 # Iterate over our supported Ubuntu LTS releases
 for ubuntuRelease in RELEASES:
 	
-	# Retrieve the list of tags for the `nvidia/cudagl` development image for the current Ubuntu release
-	cudaSuffix = '-devel-ubuntu{}'.format(ubuntuRelease)
+	# Retrieve the list of tags for the `nvidia/cudagl` runtime image for the current Ubuntu release
+	cudaSuffix = '-runtime-ubuntu{}'.format(ubuntuRelease)
 	cudaTags = [tag for tag in listTags('nvidia/cudagl') if tag.endswith(cudaSuffix)]
 	
 	# Generate our list of ue4-runtime image variants and corresponding base images
@@ -91,14 +83,6 @@ for ubuntuRelease in RELEASES:
 	for suffix, baseImage in variants.items():
 		tag = '{}:{}-{}'.format(PREFIX, ubuntuRelease, suffix)
 		built.append(buildImage(join(rootDir, 'base'), baseImage, tag, args.dry_run))
-	
-	# Build each version of TensorFlow for which we have a Dockerfile
-	# (Note that each Dockerfile has a hardcoded base image to match the required version of CUDA, so we don't specify one here)
-	# (Note also that TensorFlow 1.13.1 requires CUDA 10.0, which isn't supported for Ubuntu 20.04)
-	for tfVersion in tfVersions:
-		if ubuntuRelease != '20.04' or tfVersion != '1.13.1':
-			tag = '{}:{}-tensorflow-{}'.format(PREFIX, ubuntuRelease, tfVersion)
-			built.append(buildImage(join(rootDir, 'tensorflow', tfVersion), ubuntuRelease, tag, args.dry_run))
 	
 	# Build a VirtualGL-enabled version of each image
 	vglBases = [image for image in built.copy() if ubuntuRelease in image]
@@ -114,17 +98,9 @@ for ubuntuRelease in RELEASES:
 latest = '{}:latest'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ALIAS_RELEASE), latest, args.dry_run))
 
-# Tag the latest version of TensorFlow without a version suffix
-unversionedTF = '{}:tensorflow'.format(PREFIX)
-aliases.append(tagImage('{}:{}-tensorflow-{}'.format(PREFIX, ALIAS_RELEASE_TENSORFLOW, newestTF), unversionedTF, args.dry_run))
-
 # Tag the Vulkan variant of the VirtualGL image with a non-suffixed tag
 nonSuffixedVgl = '{}:virtualgl'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan-virtualgl'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
-
-# Tag the latest version of `ue4-runtime:tensorflow-virtualgl` without a version suffix
-unversionedVgl = '{}:tensorflow-virtualgl'.format(PREFIX)
-aliases.append(tagImage('{}:{}-tensorflow-{}-virtualgl'.format(PREFIX, ALIAS_RELEASE_TENSORFLOW, newestTF), unversionedVgl, args.dry_run))
 
 # Print the list of built images
 print('The following images were built:\n')

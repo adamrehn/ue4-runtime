@@ -3,9 +3,9 @@ Container images for running packaged UE4 projects
 
 The various tags of the [adamrehn/ue4-runtime](https://hub.docker.com/r/adamrehn/ue4-runtime) image provide minimal, pre-configured environments for running packaged Unreal Engine projects with full GPU acceleration via the [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-docker). (For more details on the NVIDIA Container Toolkit, see the [NVIDIA Container Toolkit primer](https://unrealcontainers.com/docs/concepts/nvidia-docker) on the Unreal Containers community hub.) Note that these images will work with packaged Linux builds **from any source**, not just builds packaged using the container images from the [ue4-docker](https://github.com/adamrehn/ue4-docker) project.
 
-Both OpenGL+Vulkan and OpenGL+Vulkan+CUDA variants are provided, along with preconfigured images for common GPU-accelerated frameworks such as [TensorFlow](https://www.tensorflow.org/). Each image variant is also available in a configuration with [VirtualGL](https://www.virtualgl.org/) bundled for displaying the output of OpenGL applications using the host system's display. See the section [Using the VirtualGL images](#using-the-virtualgl-images) for usage details.
+Both OpenGL+Vulkan and OpenGL+Vulkan+CUDA variants are provided. Each image variant is also available in a configuration with [VirtualGL](https://www.virtualgl.org/) bundled for displaying the output of OpenGL applications using the host system's display. See the section [Using the VirtualGL images](#using-the-virtualgl-images) for usage details.
 
-For details on using these images to perform cloud rendering via NVIDIA Docker, see the [Cloud rendering guide](https://unrealcontainers.com/docs/use-cases/cloud-rendering) on the Unreal Containers community hub. There are also [example Dockerfiles](https://github.com/adamrehn/ue4-example-dockerfiles) available that demonstrate various uses of Unreal Engine containers, including multi-stage build workflows that encapsulate packaged projects in variants of the `ue4-runtime` image.
+For details on using these images to perform cloud rendering via the NVIDIA Container Toolkit, see the [Cloud rendering guide](https://unrealcontainers.com/docs/use-cases/cloud-rendering) on the Unreal Containers community hub. There are also [example Dockerfiles](https://github.com/adamrehn/ue4-example-dockerfiles) available that demonstrate various uses of Unreal Engine containers, including multi-stage build workflows that encapsulate packaged projects in variants of the `ue4-runtime` image.
 
 
 ## Alias tags
@@ -18,7 +18,6 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**20.04-opengl** is an alias for `adamrehn/ue4-runtime`:**20.04-vulkan**
 - `adamrehn/ue4-runtime`:**tensorflow** is an alias for `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1**
 - `adamrehn/ue4-runtime`:**virtualgl** is an alias for `adamrehn/ue4-runtime`:**20.04-vulkan-virtualgl**
-- `adamrehn/ue4-runtime`:**tensorflow-virtualgl** is an alias for `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1-virtualgl**
 
 
 ## Ubuntu 20.04 tags
@@ -40,7 +39,6 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.2**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.2
 - `adamrehn/ue4-runtime`:**18.04-cudagl11.0**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.0
 - `adamrehn/ue4-runtime`:**18.04-cudagl11.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1
-- `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1
 - `adamrehn/ue4-runtime`:**18.04-vulkan-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl9.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 9.2 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + VirtualGL
@@ -48,7 +46,6 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**18.04-cudagl10.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.2 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl11.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.0 + VirtualGL
 - `adamrehn/ue4-runtime`:**18.04-cudagl11.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1 + VirtualGL
-- `adamrehn/ue4-runtime`:**18.04-tensorflow-1.13.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1 + VirtualGL
 
 
 ## Ubuntu 16.04 tags
@@ -62,7 +59,6 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.2**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2
 - `adamrehn/ue4-runtime`:**16.04-cudagl11.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0
 - `adamrehn/ue4-runtime`:**16.04-cudagl11.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1
-- `adamrehn/ue4-runtime`:**16.04-tensorflow-1.13.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1
 - `adamrehn/ue4-runtime`:**16.04-vulkan-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl9.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.0 + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl9.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.1 + VirtualGL
@@ -72,7 +68,6 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - `adamrehn/ue4-runtime`:**16.04-cudagl10.2-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2 + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl11.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0 + VirtualGL
 - `adamrehn/ue4-runtime`:**16.04-cudagl11.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1 + VirtualGL
-- `adamrehn/ue4-runtime`:**16.04-tensorflow-1.13.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + TensorFlow 1.13.1 + VirtualGL
 
 
 ## Vulkan rendering
@@ -112,6 +107,4 @@ To build the images, simply run `build.py`. This will automatically query Docker
 
 ## Legal
 
-Copyright &copy; 2019 - 2020, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](https://github.com/adamrehn/ue4-runtime/blob/master/LICENSE) for details.
-
-Initial development of the TensorFlow 1.13.1 image variant was funded by [Deepdrive, Inc](https://deepdrive.io/).
+Copyright &copy; 2019 - 2021, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](https://github.com/adamrehn/ue4-runtime/blob/master/LICENSE) for details.
