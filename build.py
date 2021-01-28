@@ -70,8 +70,8 @@ aliases = []
 # Iterate over our supported Ubuntu LTS releases
 for ubuntuRelease in RELEASES:
 	
-	# Retrieve the list of tags for the `nvidia/cudagl` runtime image for the current Ubuntu release
-	cudaSuffix = '-runtime-ubuntu{}'.format(ubuntuRelease)
+	# Retrieve the list of tags for the `nvidia/cudagl` base image for the current Ubuntu release
+	cudaSuffix = '-base-ubuntu{}'.format(ubuntuRelease)
 	cudaTags = [tag for tag in listTags('nvidia/cudagl') if tag.endswith(cudaSuffix)]
 	
 	# Generate our list of ue4-runtime image variants and corresponding base images
