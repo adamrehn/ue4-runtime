@@ -85,10 +85,15 @@ for ubuntuRelease in RELEASES:
 		built.append(buildImage(join(rootDir, 'base'), baseImage, tag, args.dry_run))
 	
 	# Build a VirtualGL-enabled version of each image
-	vglBases = [image for image in built.copy() if ubuntuRelease in image]
-	for baseImage in vglBases:
+	bases = [image for image in built.copy() if ubuntuRelease in image]
+	for baseImage in bases:
 		tag = baseImage + '-virtualgl'
 		built.append(buildImage(join(rootDir, 'virtualgl'), baseImage, tag, args.dry_run))
+	
+	# Build a version of each image that uses the host system's PulseAudio server
+	for baseImage in bases:
+		tag = baseImage + '-hostaudio'
+		built.append(buildImage(join(rootDir, 'hostaudio'), baseImage, tag, args.dry_run))
 
 # Create OpenGL aliases for our OpenGL+Vulkan images, to maintain backwards compatibility with the tags for the old OpenGL-only images
 for ubuntuRelease in RELEASES:
@@ -101,6 +106,10 @@ aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ALIAS_RELEASE), latest, ar
 # Tag the Vulkan variant of the VirtualGL image with a non-suffixed tag
 nonSuffixedVgl = '{}:virtualgl'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan-virtualgl'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
+
+# Tag the Vulkan variant of the host audio image with a non-suffixed tag
+nonSuffixedHostAudio = '{}:hostaudio'.format(PREFIX)
+aliases.append(tagImage('{}:{}-vulkan-hostaudio'.format(PREFIX, ALIAS_RELEASE), nonSuffixedHostAudio, args.dry_run))
 
 # Print the list of built images
 print('The following images were built:\n')

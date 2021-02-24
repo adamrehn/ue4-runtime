@@ -5,9 +5,12 @@ FROM ${BASEIMAGE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Enable PulseAudio support
-RUN apt-get update && apt-get install -y --no-install-recommends pulseaudio-utils && \
+RUN apt-get update && \
+	apt-get install -y --no-install-recommends pulseaudio && \
 	rm -rf /var/lib/apt/lists/*
 COPY pulseaudio-client.conf /etc/pulse/client.conf
+COPY pulseaudio-daemon.conf /etc/pulse/daemon.conf
+COPY pulseaudio-default.pa /etc/pulse/default.pa
 
 # Enable Vulkan support
 RUN apt-get update && apt-get install -y --no-install-recommends libvulkan1 && \
