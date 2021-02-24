@@ -150,6 +150,15 @@ The manner in which you need to invoke UE4 projects inside the container depends
 - If you are running the container on a remote host and are using X11 forwarding to display the window on your local machine then you will need to run UE4 projects via `vglrun` in order to ensure OpenGL functionality will work from within an SSH session. (e.g. `vglrun ./MyProject.sh`)
 
 
+## Audio output
+
+By default, the container images are configured to spawn a PulseAudio server on demand when packaged Unreal projects initialise audio output. This allows the Unreal Engine to produce audio output inside the container which can then be captured (e.g. using Pixel Streaming for Linux.) However, this behaviour may be undesirable for use cases where the host system's X11 socket is bind-mounted and output is displayed on the host, since audio output will not be propagated alongside the rendered output. The `hostaudio` configuration of each image variant overrides this default behaviour and instructs the Unreal Engine to instead use a PulseAudio socket bind-mounted from the host system, thus allowing audio output to be heard on the host. To bind-mount the PulseAudio socket from the host system, use the following flag:
+
+```bash
+"-v/run/user/$UID/pulse:/run/user/1000/pulse"
+```
+
+
 ## Building the images from source
 
 Building the container images from source requires Python 3.5 or newer and the dependency packages listed in [requirements.txt](https://github.com/adamrehn/ue4-runtime/blob/master/requirements.txt).
