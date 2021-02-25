@@ -169,3 +169,5 @@ To build the images, simply run `build.py`. This will automatically query Docker
 ## Legal
 
 Copyright &copy; 2019 - 2021, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](https://github.com/adamrehn/ue4-runtime/blob/master/LICENSE) for details.
+
+The file [pulseaudio-default.pa](./base/pulseaudio-default.pa) is adapted from the [default PulseAudio configuration data](https://github.com/pulseaudio/pulseaudio/blob/v12.2/src/daemon/default.pa.in), which is part of PulseAudio and is licensed under the [GNU Lesser General Public License version 2.1 or newer](https://github.com/pulseaudio/pulseaudio/blob/master/LGPL).
