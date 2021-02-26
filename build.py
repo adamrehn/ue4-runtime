@@ -79,21 +79,28 @@ for ubuntuRelease in RELEASES:
 	for tag in cudaTags:
 		variants['cudagl{}'.format(tag.replace(cudaSuffix, ''))] = 'nvidia/cudagl:{}'.format(tag)
 	
-	# Build the base image for each variant
+	# Build the base image for each variant (the "noaudio" version without PulseAudio)
 	for suffix, baseImage in variants.items():
-		tag = '{}:{}-{}'.format(PREFIX, ubuntuRelease, suffix)
+		tag = '{}:{}-{}-noaudio'.format(PREFIX, ubuntuRelease, suffix)
 		built.append(buildImage(join(rootDir, 'base'), baseImage, tag, args.dry_run))
 	
-	# Build a VirtualGL-enabled version of each image
+	# Build a version of each image that supports audio by running a PulseAudio server inside the container
+	# (This is the default recommended variant, so we tag it without a suffix)
 	bases = [image for image in built.copy() if ubuntuRelease in image]
+	for baseImage in bases:
+		tag = baseImage.replace('-noaudio', '')
+		built.append(buildImage(join(rootDir, 'pulseaudio'), baseImage, tag, args.dry_run))
+	
+	# Build a version of each image that supports audio by using the host system's PulseAudio server
+	for baseImage in bases:
+		tag = baseImage.replace('-noaudio', '-hostaudio')
+		built.append(buildImage(join(rootDir, 'hostaudio'), baseImage, tag, args.dry_run))
+	
+	# Build a VirtualGL-enabled version of the images that run a PulseAudio server inside the container
+	bases = [image for image in built.copy() if ubuntuRelease in image and not image.endswith('audio')]
 	for baseImage in bases:
 		tag = baseImage + '-virtualgl'
 		built.append(buildImage(join(rootDir, 'virtualgl'), baseImage, tag, args.dry_run))
-	
-	# Build a version of each image that uses the host system's PulseAudio server
-	for baseImage in bases:
-		tag = baseImage + '-hostaudio'
-		built.append(buildImage(join(rootDir, 'hostaudio'), baseImage, tag, args.dry_run))
 
 # Create OpenGL aliases for our OpenGL+Vulkan images, to maintain backwards compatibility with the tags for the old OpenGL-only images
 for ubuntuRelease in RELEASES:
@@ -106,6 +113,10 @@ aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ALIAS_RELEASE), latest, ar
 # Tag the Vulkan variant of the VirtualGL image with a non-suffixed tag
 nonSuffixedVgl = '{}:virtualgl'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan-virtualgl'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
+
+# Tag the Vulkan variant of the "noaudio" image with a non-suffixed tag
+nonSuffixedNoAudio = '{}:noaudio'.format(PREFIX)
+aliases.append(tagImage('{}:{}-vulkan-noaudio'.format(PREFIX, ALIAS_RELEASE), nonSuffixedNoAudio, args.dry_run))
 
 # Tag the Vulkan variant of the host audio image with a non-suffixed tag
 nonSuffixedHostAudio = '{}:hostaudio'.format(PREFIX)
