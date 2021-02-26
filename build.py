@@ -2,6 +2,7 @@
 from os.path import abspath, basename, dirname, join
 import argparse, glob, packaging, requests, subprocess, sys
 from packaging.version import parse
+from natsort import natsorted
 
 
 # The base name of our generated images
@@ -58,57 +59,74 @@ def listTags(image):
 parser = argparse.ArgumentParser()
 parser.add_argument('--dry-run', action='store_true', help='Print Docker commands without running them')
 parser.add_argument('--push', action='store_true', help='Push tagged images to Docker Hub')
+parser.add_argument('--readme', action='store_true', help='Generate descriptive tag list for README file')
 args = parser.parse_args()
 
 # Compute the absolute path to the root directory containing our Dockerfiles
 rootDir = dirname(abspath(__file__))
 
-# Keep track of the list of images we've built and alias tags we've generated
+# Keep track of the list of images we've built, descriptions for the built images, and alias tags we've generated
 built = []
+descriptions = {}
 aliases = []
 
 # Iterate over our supported Ubuntu LTS releases
 for ubuntuRelease in RELEASES:
 	
+	# The base description string for all image tags within the current Ubuntu release
+	releaseDescription = 'Ubuntu {} + OpenGL + Vulkan'.format(ubuntuRelease)
+	
 	# Retrieve the list of tags for the `nvidia/cudagl` base image for the current Ubuntu release
 	cudaSuffix = '-base-ubuntu{}'.format(ubuntuRelease)
-	cudaTags = [tag for tag in listTags('nvidia/cudagl') if tag.endswith(cudaSuffix)]
+	cudaTags = natsorted([tag for tag in listTags('nvidia/cudagl') if tag.endswith(cudaSuffix)])
 	
 	# Generate our list of ue4-runtime image variants and corresponding base images
 	variants = {'vulkan': 'nvidia/opengl:1.2-glvnd-runtime-ubuntu{}'.format(ubuntuRelease)}
+	variantDescriptions = {'vulkan': ''}
 	for tag in cudaTags:
-		variants['cudagl{}'.format(tag.replace(cudaSuffix, ''))] = 'nvidia/cudagl:{}'.format(tag)
+		cudaVersion = tag.replace(cudaSuffix, '')
+		variant = 'cudagl{}'.format(cudaVersion)
+		variants[variant] = 'nvidia/cudagl:{}'.format(tag)
+		variantDescriptions[variant] = ' + CUDA {}'.format(cudaVersion)
 	
 	# Build the base image for each variant (the "noaudio" version without PulseAudio)
+	# (Add these to a temporary list so we can place them after the non-suffixed tags when we print our tag list)
+	noAudio = []
 	for suffix, baseImage in variants.items():
 		tag = '{}:{}-{}-noaudio'.format(PREFIX, ubuntuRelease, suffix)
-		built.append(buildImage(join(rootDir, 'base'), baseImage, tag, args.dry_run))
+		noAudio.append(buildImage(join(rootDir, 'base'), baseImage, tag, args.dry_run))
+		descriptions[noAudio[-1]] = releaseDescription + variantDescriptions[suffix] + ' (no audio support)'
 	
 	# Build a version of each image that supports audio by running a PulseAudio server inside the container
 	# (This is the default recommended variant, so we tag it without a suffix)
-	bases = [image for image in built.copy() if ubuntuRelease in image]
-	for baseImage in bases:
+	for baseImage in noAudio:
 		tag = baseImage.replace('-noaudio', '')
 		built.append(buildImage(join(rootDir, 'pulseaudio'), baseImage, tag, args.dry_run))
+		descriptions[built[-1]] = descriptions[baseImage].replace(' (no audio support)', ' + PulseAudio Client + PulseAudio Server')
+	
+	# Add the "-noaudio" tags to our tag list immediately after the non-suffixed tags
+	built.extend(noAudio)
 	
 	# Build a version of each image that supports audio by using the host system's PulseAudio server
-	for baseImage in bases:
+	for baseImage in noAudio:
 		tag = baseImage.replace('-noaudio', '-hostaudio')
 		built.append(buildImage(join(rootDir, 'hostaudio'), baseImage, tag, args.dry_run))
+		descriptions[built[-1]] = descriptions[baseImage].replace(' (no audio support)', ' + PulseAudio Client (uses host PulseAudio Server)')
 	
-	# Build a VirtualGL-enabled version of the images that run a PulseAudio server inside the container
+	# Build a VirtualGL-enabled version of the non-suffixed images that run a PulseAudio server inside the container
 	bases = [image for image in built.copy() if ubuntuRelease in image and not image.endswith('audio')]
 	for baseImage in bases:
 		tag = baseImage + '-virtualgl'
 		built.append(buildImage(join(rootDir, 'virtualgl'), baseImage, tag, args.dry_run))
-
-# Create OpenGL aliases for our OpenGL+Vulkan images, to maintain backwards compatibility with the tags for the old OpenGL-only images
-for ubuntuRelease in RELEASES:
-	aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ubuntuRelease), '{}:{}-opengl'.format(PREFIX, ubuntuRelease), args.dry_run))
+		descriptions[built[-1]] = descriptions[baseImage] + ' + VirtualGL'
 
 # Tag the Vulkan variant of the Ubuntu 20.04 base image as our "latest" tag
 latest = '{}:latest'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ALIAS_RELEASE), latest, args.dry_run))
+
+# Create OpenGL aliases for our OpenGL+Vulkan images, to maintain backwards compatibility with the tags for the old OpenGL-only images
+for ubuntuRelease in RELEASES:
+	aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ubuntuRelease), '{}:{}-opengl'.format(PREFIX, ubuntuRelease), args.dry_run))
 
 # Tag the Vulkan variant of the VirtualGL image with a non-suffixed tag
 nonSuffixedVgl = '{}:virtualgl'.format(PREFIX)
@@ -138,3 +156,30 @@ print()
 if args.push == True:
 	for image in built + [alias for alias, original in aliases]:
 		pushImage(image, args.dry_run)
+
+# Determine whether we are generating the descriptive tag list used to populate the repository's README file
+if args.readme == True:
+	
+	print('----------------')
+	print('README TAG LISTS')
+	print('----------------')
+	print()
+	
+	# Pretty-formats a tag
+	formatTag = lambda tag: '`adamrehn/ue4-runtime`:**{}**'.format(tag.replace('adamrehn/ue4-runtime:', ''))
+	
+	# Print the descriptive details of our alias tags
+	print('## Alias tags\n')
+	print('The following tags are provided as convenient aliases for the fully-qualified tags of common image variants:\n')
+	for alias, image in aliases:
+		print('- {} is an alias for {}'.format(formatTag(alias), formatTag(image)))
+	
+	# Iterate over our supported Ubuntu LTS releases
+	for ubuntuRelease in reversed(RELEASES):
+		
+		print('\n\n## Ubuntu {} tags\n'.format(ubuntuRelease))
+		images = [image for image in built.copy() if ubuntuRelease in image]
+		for image in images:
+			print('- {}: {}'.format(formatTag(image), descriptions[image]))
+	
+	print()
