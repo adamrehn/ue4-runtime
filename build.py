@@ -166,7 +166,7 @@ if args.readme == True:
 	print()
 	
 	# Pretty-formats a tag
-	formatTag = lambda tag: '`adamrehn/ue4-runtime`:**{}**'.format(tag.replace('adamrehn/ue4-runtime:', ''))
+	formatTag = lambda tag: '**{}**'.format(tag.replace('adamrehn/ue4-runtime:', ''))
 	
 	# Print the descriptive details of our alias tags
 	print('## Alias tags\n')
