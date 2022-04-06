@@ -6,25 +6,25 @@ FROM ${BASEIMAGE}
 
 # Install the dependencies for VirtualGL
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends \
-	ca-certificates \
-	curl \
-	libfontconfig1 \
-	libfreetype6 \
-	libglu1 \
-	libsm6 \
-	libxcomposite1 \
-	libxcursor1 \
-	libxi6 \
-	libxrandr2 \
-	libxrender1 \
-	libxss1 \
-	libxv1 \
-	x11-xkb-utils \
-	xauth \
-	xfonts-base \
-	xkb-data && \
-rm -rf /var/lib/apt/lists/*
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+	apt-get update && apt-get install -y --no-install-recommends \
+		ca-certificates \
+		curl \
+		libfontconfig1 \
+		libfreetype6 \
+		libglu1 \
+		libsm6 \
+		libxcomposite1 \
+		libxcursor1 \
+		libxi6 \
+		libxrandr2 \
+		libxrender1 \
+		libxss1 \
+		libxv1 \
+		x11-xkb-utils \
+		xauth \
+		xfonts-base \
+		xkb-data
 
 # Install VirtualGL
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display

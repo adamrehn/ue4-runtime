@@ -25,7 +25,7 @@ def run(command, dryRun):
 # Builds a specific image variant and returns the tag
 def buildImage(context, baseImage, tag, dryRun):
 	buildArgs = ['--build-arg', 'BASEIMAGE=' + baseImage] if baseImage is not None else []
-	run(['docker', 'build', '-t', tag] + buildArgs + [context], dryRun)
+	run(['docker', 'buildx', 'build', '--progress=plain', '-t', tag] + buildArgs + [context], dryRun)
 	return tag
 
 # Adds a new tag for an image and returns a tuple of (alias, original)

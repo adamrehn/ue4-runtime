@@ -5,8 +5,9 @@ FROM ${BASEIMAGE}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Enable Vulkan support
-RUN apt-get update && apt-get install -y --no-install-recommends libvulkan1 && \
-	rm -rf /var/lib/apt/lists/* && \
+RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+	apt-get update && apt-get install -y --no-install-recommends libvulkan1 && \
 	VULKAN_API_VERSION=`dpkg -s libvulkan1 | grep -oP 'Version: [0-9|\.]+' | grep -oP '[0-9|\.]+'` && \
 	mkdir -p /etc/vulkan/icd.d/ && \
 	echo \
@@ -18,7 +19,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends libvulkan1 && \
 		}\
 	}" > /etc/vulkan/icd.d/nvidia_icd.json
 
-# Since UE4 refuses to run as the root user under Linux, create a non-root user
+# Install the `xdg-user-dir` tool so the Unreal Engine can use it to locate the user's Documents directory
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+	apt-get update && apt-get install -y --no-install-recommends xdg-user-dirs
+
+# Since the Unreal Engine refuses to run as the root user under Linux, create a non-root user
 RUN useradd --create-home --home /home/ue4 --shell /bin/bash --uid 1000 ue4 && \
 	usermod -a -G audio,video ue4
 USER ue4
