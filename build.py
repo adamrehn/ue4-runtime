@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-from os.path import abspath, basename, dirname, join
-import argparse, glob, packaging, requests, subprocess, sys
-from packaging.version import parse
+from os.path import abspath, dirname, join
+import argparse, requests, subprocess
 from natsort import natsorted
 
 
@@ -9,7 +8,7 @@ from natsort import natsorted
 PREFIX = 'adamrehn/ue4-runtime'
 
 # The list of supported Ubuntu LTS releases
-RELEASES = ['16.04', '18.04', '20.04']
+RELEASES = ['18.04', '20.04']
 
 # The Ubuntu release that our alias tags point to
 ALIAS_RELEASE = '20.04'
@@ -154,7 +153,7 @@ print()
 
 # Push the built images up to Docker Hub if requested
 if args.push == True:
-	for image in built + [alias for alias, original in aliases]:
+	for image in built + [alias for alias, _ in aliases]:
 		pushImage(image, args.dry_run)
 
 # Determine whether we are generating the descriptive tag list used to populate the repository's README file
