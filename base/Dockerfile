@@ -4,6 +4,9 @@ FROM ${BASEIMAGE}
 # Disable interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Enable NVENC support for Unreal Engine plugins that depend on it (e.g. Pixel Streaming)
+ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},video
+
 # Enable Vulkan support
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
