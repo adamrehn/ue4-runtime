@@ -5,4 +5,4 @@
 rm -rf ~/.config/pulse /tmp/pulse-*
 
 # Run the entrypoint command specified via our command-line parameters
-$*
+"$@"
