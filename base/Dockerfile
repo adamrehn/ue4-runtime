@@ -4,7 +4,7 @@ FROM ${BASEIMAGE}
 # Disable interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Enable NVENC support for Unreal Engine plugins that depend on it (e.g. Pixel Streaming)
+# Enable NVENC support for use by Unreal Engine plugins that depend on it (e.g. Pixel Streaming)
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},video
 
 # Enable Vulkan support
