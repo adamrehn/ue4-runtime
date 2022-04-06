@@ -1,8 +1,8 @@
 #!/usr/bin/pulseaudio -nF
 .fail
 
-# Load the native PulseAudio protocol implementation for communication over Unix sockets
-load-module module-native-protocol-unix
+# Load the native PulseAudio protocol implementation for communication over Unix sockets and disable authentication
+load-module module-native-protocol-unix auth-anonymous=1
 
 # Create a null sink to ensure the Unreal Engine has somewhere to send its audio output
 load-module module-always-sink
