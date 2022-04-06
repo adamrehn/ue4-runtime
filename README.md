@@ -13,7 +13,6 @@ For details on using these images to perform cloud rendering via the NVIDIA Cont
 The following tags are provided as convenient aliases for the fully-qualified tags of common image variants:
 
 - **latest** is an alias for **20.04-vulkan**
-- **16.04-opengl** is an alias for **16.04-vulkan**
 - **18.04-opengl** is an alias for **18.04-vulkan**
 - **20.04-opengl** is an alias for **20.04-vulkan**
 - **virtualgl** is an alias for **20.04-vulkan-virtualgl**
@@ -29,24 +28,52 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - **20.04-cudagl11.1**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1 + PulseAudio Client + PulseAudio Server
 - **20.04-cudagl11.1.1**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client + PulseAudio Server
 - **20.04-cudagl11.2.0**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.2.1**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.2.2**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.2 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.3.0**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.0 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.3.1**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.1 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.4.0**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.0 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.4.1**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.1 + PulseAudio Client + PulseAudio Server
+- **20.04-cudagl11.4.2**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.2 + PulseAudio Client + PulseAudio Server
 - **20.04-vulkan-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan (no audio support)
 - **20.04-cudagl11.0-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0 (no audio support)
 - **20.04-cudagl11.0.3-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0.3 (no audio support)
 - **20.04-cudagl11.1-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1 (no audio support)
 - **20.04-cudagl11.1.1-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1.1 (no audio support)
 - **20.04-cudagl11.2.0-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.0 (no audio support)
+- **20.04-cudagl11.2.1-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.1 (no audio support)
+- **20.04-cudagl11.2.2-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.2 (no audio support)
+- **20.04-cudagl11.3.0-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.0 (no audio support)
+- **20.04-cudagl11.3.1-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.1 (no audio support)
+- **20.04-cudagl11.4.0-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.0 (no audio support)
+- **20.04-cudagl11.4.1-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.1 (no audio support)
+- **20.04-cudagl11.4.2-noaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.2 (no audio support)
 - **20.04-vulkan-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + PulseAudio Client (uses host PulseAudio Server)
 - **20.04-cudagl11.0-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0 + PulseAudio Client (uses host PulseAudio Server)
 - **20.04-cudagl11.0.3-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0.3 + PulseAudio Client (uses host PulseAudio Server)
 - **20.04-cudagl11.1-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1 + PulseAudio Client (uses host PulseAudio Server)
 - **20.04-cudagl11.1.1-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client (uses host PulseAudio Server)
 - **20.04-cudagl11.2.0-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.2.1-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.2.2-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.2 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.3.0-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.0 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.3.1-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.1 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.4.0-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.0 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.4.1-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.1 + PulseAudio Client (uses host PulseAudio Server)
+- **20.04-cudagl11.4.2-hostaudio**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.2 + PulseAudio Client (uses host PulseAudio Server)
 - **20.04-vulkan-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + PulseAudio Client + PulseAudio Server + VirtualGL
 - **20.04-cudagl11.0-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **20.04-cudagl11.0.3-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.0.3 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **20.04-cudagl11.1-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **20.04-cudagl11.1.1-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **20.04-cudagl11.2.0-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.2.1-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.2.2-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.2.2 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.3.0-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.0 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.3.1-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.3.1 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.4.0-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.0 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.4.1-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.1 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **20.04-cudagl11.4.2-virtualgl**: Ubuntu 20.04 + OpenGL + Vulkan + CUDA 11.4.2 + PulseAudio Client + PulseAudio Server + VirtualGL
 
 
 ## Ubuntu 18.04 tags
@@ -62,6 +89,12 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - **18.04-cudagl11.1.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client + PulseAudio Server
 - **18.04-cudagl11.2.0**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client + PulseAudio Server
 - **18.04-cudagl11.2.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client + PulseAudio Server
+- **18.04-cudagl11.2.2**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.2 + PulseAudio Client + PulseAudio Server
+- **18.04-cudagl11.3.0**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.0 + PulseAudio Client + PulseAudio Server
+- **18.04-cudagl11.3.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.1 + PulseAudio Client + PulseAudio Server
+- **18.04-cudagl11.4.0**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.0 + PulseAudio Client + PulseAudio Server
+- **18.04-cudagl11.4.1**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.1 + PulseAudio Client + PulseAudio Server
+- **18.04-cudagl11.4.2**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.2 + PulseAudio Client + PulseAudio Server
 - **18.04-vulkan-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan (no audio support)
 - **18.04-cudagl9.2-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 9.2 (no audio support)
 - **18.04-cudagl10.0-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 (no audio support)
@@ -73,6 +106,12 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - **18.04-cudagl11.1.1-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1.1 (no audio support)
 - **18.04-cudagl11.2.0-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.0 (no audio support)
 - **18.04-cudagl11.2.1-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.1 (no audio support)
+- **18.04-cudagl11.2.2-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.2 (no audio support)
+- **18.04-cudagl11.3.0-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.0 (no audio support)
+- **18.04-cudagl11.3.1-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.1 (no audio support)
+- **18.04-cudagl11.4.0-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.0 (no audio support)
+- **18.04-cudagl11.4.1-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.1 (no audio support)
+- **18.04-cudagl11.4.2-noaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.2 (no audio support)
 - **18.04-vulkan-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + PulseAudio Client (uses host PulseAudio Server)
 - **18.04-cudagl9.2-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 9.2 + PulseAudio Client (uses host PulseAudio Server)
 - **18.04-cudagl10.0-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + PulseAudio Client (uses host PulseAudio Server)
@@ -84,6 +123,12 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - **18.04-cudagl11.1.1-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client (uses host PulseAudio Server)
 - **18.04-cudagl11.2.0-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client (uses host PulseAudio Server)
 - **18.04-cudagl11.2.1-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client (uses host PulseAudio Server)
+- **18.04-cudagl11.2.2-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.2 + PulseAudio Client (uses host PulseAudio Server)
+- **18.04-cudagl11.3.0-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.0 + PulseAudio Client (uses host PulseAudio Server)
+- **18.04-cudagl11.3.1-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.1 + PulseAudio Client (uses host PulseAudio Server)
+- **18.04-cudagl11.4.0-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.0 + PulseAudio Client (uses host PulseAudio Server)
+- **18.04-cudagl11.4.1-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.1 + PulseAudio Client (uses host PulseAudio Server)
+- **18.04-cudagl11.4.2-hostaudio**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.2 + PulseAudio Client (uses host PulseAudio Server)
 - **18.04-vulkan-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + PulseAudio Client + PulseAudio Server + VirtualGL
 - **18.04-cudagl9.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 9.2 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **18.04-cudagl10.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 10.0 + PulseAudio Client + PulseAudio Server + VirtualGL
@@ -95,62 +140,12 @@ The following tags are provided as convenient aliases for the fully-qualified ta
 - **18.04-cudagl11.1.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **18.04-cudagl11.2.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client + PulseAudio Server + VirtualGL
 - **18.04-cudagl11.2.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client + PulseAudio Server + VirtualGL
-
-
-## Ubuntu 16.04 tags
-
-- **16.04-vulkan**: Ubuntu 16.04 + OpenGL + Vulkan + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl9.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.0 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl9.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.1 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl9.2**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.2 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl10.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl10.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.1 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl10.2**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl11.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl11.0.3**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0.3 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl11.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl11.1.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl11.2.0**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client + PulseAudio Server
-- **16.04-cudagl11.2.1**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client + PulseAudio Server
-- **16.04-vulkan-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan (no audio support)
-- **16.04-cudagl9.0-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.0 (no audio support)
-- **16.04-cudagl9.1-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.1 (no audio support)
-- **16.04-cudagl9.2-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.2 (no audio support)
-- **16.04-cudagl10.0-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 (no audio support)
-- **16.04-cudagl10.1-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.1 (no audio support)
-- **16.04-cudagl10.2-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2 (no audio support)
-- **16.04-cudagl11.0-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0 (no audio support)
-- **16.04-cudagl11.0.3-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0.3 (no audio support)
-- **16.04-cudagl11.1-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1 (no audio support)
-- **16.04-cudagl11.1.1-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1.1 (no audio support)
-- **16.04-cudagl11.2.0-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.0 (no audio support)
-- **16.04-cudagl11.2.1-noaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.1 (no audio support)
-- **16.04-vulkan-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl9.0-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.0 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl9.1-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.1 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl9.2-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.2 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl10.0-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl10.1-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.1 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl10.2-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl11.0-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl11.0.3-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0.3 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl11.1-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl11.1.1-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl11.2.0-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-cudagl11.2.1-hostaudio**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client (uses host PulseAudio Server)
-- **16.04-vulkan-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl9.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.0 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl9.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.1 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl9.2-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 9.2 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl10.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.0 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl10.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.1 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl10.2-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 10.2 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl11.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl11.0.3-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.0.3 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl11.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl11.1.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.1.1 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl11.2.0-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.0 + PulseAudio Client + PulseAudio Server + VirtualGL
-- **16.04-cudagl11.2.1-virtualgl**: Ubuntu 16.04 + OpenGL + Vulkan + CUDA 11.2.1 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **18.04-cudagl11.2.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.2.2 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **18.04-cudagl11.3.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.0 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **18.04-cudagl11.3.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.3.1 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **18.04-cudagl11.4.0-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.0 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **18.04-cudagl11.4.1-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.1 + PulseAudio Client + PulseAudio Server + VirtualGL
+- **18.04-cudagl11.4.2-virtualgl**: Ubuntu 18.04 + OpenGL + Vulkan + CUDA 11.4.2 + PulseAudio Client + PulseAudio Server + VirtualGL
 
 
 ## Vulkan rendering
@@ -199,6 +194,6 @@ To build the images, simply run `build.py`. This will automatically query Docker
 
 ## Legal
 
-Copyright &copy; 2019 - 2021, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](https://github.com/adamrehn/ue4-runtime/blob/master/LICENSE) for details.
+Copyright &copy; 2019 - 2022, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](https://github.com/adamrehn/ue4-runtime/blob/master/LICENSE) for details.
 
 The file [pulseaudio-default.pa](./base/pulseaudio-default.pa) is adapted from the [default PulseAudio configuration data](https://github.com/pulseaudio/pulseaudio/blob/v12.2/src/daemon/default.pa.in), which is part of PulseAudio and is licensed under the [GNU Lesser General Public License version 2.1 or newer](https://github.com/pulseaudio/pulseaudio/blob/master/LGPL).
