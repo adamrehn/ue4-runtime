@@ -9,3 +9,7 @@ USER ue4
 
 # Configure the PulseAudio client to connect to the host system's server using a bind-mounted UNIX socket
 COPY pulseaudio-client.conf /etc/pulse/client.conf
+
+# Instruct the Unreal Engine to use the SDL audio driver for PulseAudio
+# (This will prevent SDL from attempting to try other audio drivers if PulseAudio fails to initialise)
+ENV SDL_AUDIODRIVER pulse

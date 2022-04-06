@@ -11,3 +11,7 @@ USER ue4
 COPY pulseaudio-client.conf /etc/pulse/client.conf
 COPY pulseaudio-daemon.conf /etc/pulse/daemon.conf
 COPY pulseaudio-default.pa /etc/pulse/default.pa
+
+# Instruct the Unreal Engine to use the SDL audio driver for PulseAudio
+# (This will prevent SDL from attempting to try other audio drivers if PulseAudio fails to initialise)
+ENV SDL_AUDIODRIVER pulse
