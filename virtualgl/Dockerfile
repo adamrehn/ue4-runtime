@@ -27,7 +27,6 @@ RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/
 		xkb-data
 
 # Install VirtualGL
-ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display
 ARG VIRTUALGL_VERSION=2.6.1
 RUN cd /tmp && \
 	curl -fsSL -O https://sourceforge.net/projects/virtualgl/files/${VIRTUALGL_VERSION}/virtualgl_${VIRTUALGL_VERSION}_amd64.deb && \

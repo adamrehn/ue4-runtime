@@ -4,10 +4,17 @@ FROM ${BASEIMAGE}
 # Disable interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Enable NVENC support for use by Unreal Engine plugins that depend on it (e.g. Pixel Streaming).
-# Also enable CUDA support (even when not using a CUDA base image), since evidently some versions of UE assume `libcuda.so.1`
-# always exists when using the NVIDIA proprietary GPU drivers, and will fail to initialise the Vulkan RHI if it is missing.
-ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},compute,video
+# Enable CUDA support (even when not using a CUDA base image), since evidently some versions of UE unconditionally assume
+# `libcuda.so.1` exists when using the NVIDIA proprietary drivers, and will fail to initialise the Vulkan RHI if it is missing
+ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},compute
+
+# Add the "display" driver capability
+# (This allows us to run projects using VirtualGL, or with onscreen rendering when bind-mounting the host system's X11 socket)
+ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display
+
+# Enable NVENC support for use by Unreal Engine plugins that depend on it (e.g. Pixel Streaming)
+# (Note that adding `video` seems to implicitly enable `compute` as well, but we include separate directives here to clearly indicate the purpose of both)
+ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},video
 
 # Enable Vulkan support
 RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
