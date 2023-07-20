@@ -109,12 +109,12 @@ for ubuntuRelease in RELEASES:
 		
 		# Record the variant details
 		variant = 'cudagl{}'.format(majorVersion)
-		variants[variant] = 'nvidia/cudagl:{}{}'.format(majorVersion, cudaSuffix)
+		variants[variant] = 'nvidia/cudagl:{}-runtime-ubuntu{}'.format(majorVersion, ubuntuRelease)
 		variantDescriptions[variant] = ' + CUDA {}'.format(minorVersion)
 		
 		# Build our own version of the `nvidia/cudagl` base image for the given version of CUDA, since NVIDIA is not currently updating the upstream image
 		buildImage(openglDir / 'base', 'nvidia/cudagl:{}-base-ubuntu{}'.format(majorVersion, ubuntuRelease), {'from': 'nvidia/cuda:{}{}'.format(minorVersion, cudaSuffix)}, args.dry_run)
-		buildImage(openglDir / 'glvnd' / 'runtime', 'nvidia/cudagl:{}-runtime-ubuntu{}'.format(majorVersion, ubuntuRelease), {'from': 'nvidia/cudagl:{}-base-ubuntu{}'.format(majorVersion, ubuntuRelease), 'LIBGLVND_VERSION': '1.2'}, args.dry_run)
+		buildImage(openglDir / 'glvnd' / 'runtime', variants[variant], {'from': 'nvidia/cudagl:{}-base-ubuntu{}'.format(majorVersion, ubuntuRelease), 'LIBGLVND_VERSION': '1.2'}, args.dry_run)
 	
 	# Build the base image for each variant (the "noaudio" version without PulseAudio)
 	# (Add these to a temporary list so we can place them after the non-suffixed tags when we print our tag list)
