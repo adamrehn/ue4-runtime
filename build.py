@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-from os.path import abspath, dirname, join
-import argparse, requests, subprocess
+import argparse, requests, shutil, subprocess
+from itertools import chain
 from natsort import natsorted
+from pathlib import Path
 
 
 # The base name of our generated images
 PREFIX = 'adamrehn/ue4-runtime'
 
 # The list of supported Ubuntu LTS releases
-RELEASES = ['18.04', '20.04']
+RELEASES = ['20.04', '22.04']
 
 # The Ubuntu release that our alias tags point to
 ALIAS_RELEASE = '20.04'
@@ -16,15 +17,21 @@ ALIAS_RELEASE = '20.04'
 
 # Prints and runs a command
 def run(command, dryRun):
-	print(command, flush=True)
+	print([str(c) for c in command], flush=True)
 	if dryRun == False:
 		subprocess.run(command, check=True)
 	print()
 
-# Builds a specific image variant and returns the tag
-def buildImage(context, baseImage, tag, dryRun):
-	buildArgs = ['--build-arg', 'BASEIMAGE=' + baseImage] if baseImage is not None else []
-	run(['docker', 'buildx', 'build', '--progress=plain', '-t', tag] + buildArgs + [context], dryRun)
+# Builds a container image
+def buildImage(context, tag, buildArgs, dryRun):
+	flags = [['--build-arg', '{}={}'.format(k,v)] for k, v in buildArgs.items()]
+	command = ['docker', 'buildx', 'build', '--progress=plain', '-t', tag, context] + list(chain.from_iterable(flags))
+	run(command, dryRun=dryRun)
+
+# Builds a specific container image variant and returns the tag
+def buildVariant(context, baseImage, tag, dryRun):
+	buildArgs = {'BASEIMAGE': baseImage} if baseImage is not None else {}
+	buildImage(context, tag, buildArgs, dryRun)
 	return tag
 
 # Adds a new tag for an image and returns a tuple of (alias, original)
@@ -61,8 +68,9 @@ parser.add_argument('--push', action='store_true', help='Push tagged images to D
 parser.add_argument('--readme', action='store_true', help='Generate descriptive tag list for README file')
 args = parser.parse_args()
 
-# Compute the absolute path to the root directory containing our Dockerfiles
-rootDir = dirname(abspath(__file__))
+# Compute the path to the root directory containing our Dockerfiles, and key subdirectories
+rootDir = Path(__file__).parent
+externalDir = rootDir / 'external'
 
 # Keep track of the list of images we've built, descriptions for the built images, and alias tags we've generated
 built = []
@@ -75,32 +83,44 @@ for ubuntuRelease in RELEASES:
 	# The base description string for all image tags within the current Ubuntu release
 	releaseDescription = 'Ubuntu {} + OpenGL + Vulkan'.format(ubuntuRelease)
 	
-	# Retrieve the list of tags for the `nvidia/cudagl` base image for the current Ubuntu release
+	# Retrieve the list of tags for the `nvidia/cuda` base image for the current Ubuntu release
 	cudaSuffix = '-base-ubuntu{}'.format(ubuntuRelease)
-	cudaTags = natsorted([tag for tag in listTags('nvidia/cudagl') if tag.endswith(cudaSuffix)])
+	cudaTags = natsorted([tag for tag in listTags('nvidia/cuda') if tag.endswith(cudaSuffix)])
+	
+	# Clone the source code for the `nvidia/opengl` base image for the current Ubuntu release
+	openglDir = externalDir / 'opengl_{}'.format(ubuntuRelease)
+	if not openglDir.exists() and not args.dry_run:
+		run(['git', 'clone', '--depth=1', '-b', 'ubuntu{}'.format(ubuntuRelease), 'https://gitlab.com/nvidia/container-images/opengl.git', str(openglDir)], False)
+		shutil.copy2(openglDir / 'NGC-DL-CONTAINER-LICENSE', openglDir / 'base' / 'NGC-DL-CONTAINER-LICENSE')
 	
 	# Generate our list of ue4-runtime image variants and corresponding base images
 	variants = {'vulkan': 'nvidia/opengl:1.2-glvnd-runtime-ubuntu{}'.format(ubuntuRelease)}
 	variantDescriptions = {'vulkan': ''}
 	for tag in cudaTags:
+		
+		# Record the variant details
 		cudaVersion = tag.replace(cudaSuffix, '')
 		variant = 'cudagl{}'.format(cudaVersion)
 		variants[variant] = 'nvidia/cudagl:{}'.format(tag)
 		variantDescriptions[variant] = ' + CUDA {}'.format(cudaVersion)
+		
+		# Build our own version of the `nvidia/cudagl` base image for the given version of CUDA, since NVIDIA is not currently updating the upstream image
+		buildImage(openglDir / 'base', 'nvidia/cudagl:{}-base-ubuntu{}'.format(cudaVersion, ubuntuRelease), {'from': 'nvidia/cuda:{}'.format(tag)}, args.dry_run)
+		buildImage(openglDir / 'glvnd' / 'runtime', 'nvidia/cudagl:{}-runtime-ubuntu{}'.format(cudaVersion, ubuntuRelease), {'from': 'nvidia/cudagl:{}-base-ubuntu{}'.format(cudaVersion, ubuntuRelease), 'LIBGLVND_VERSION': '1.2'}, args.dry_run)
 	
 	# Build the base image for each variant (the "noaudio" version without PulseAudio)
 	# (Add these to a temporary list so we can place them after the non-suffixed tags when we print our tag list)
 	noAudio = []
 	for suffix, baseImage in variants.items():
 		tag = '{}:{}-{}-noaudio'.format(PREFIX, ubuntuRelease, suffix)
-		noAudio.append(buildImage(join(rootDir, 'base'), baseImage, tag, args.dry_run))
+		noAudio.append(buildVariant(rootDir / 'base', baseImage, tag, args.dry_run))
 		descriptions[noAudio[-1]] = releaseDescription + variantDescriptions[suffix] + ' (no audio support)'
 	
 	# Build a version of each image that supports audio by running a PulseAudio server inside the container
 	# (This is the default recommended variant, so we tag it without a suffix)
 	for baseImage in noAudio:
 		tag = baseImage.replace('-noaudio', '')
-		built.append(buildImage(join(rootDir, 'pulseaudio'), baseImage, tag, args.dry_run))
+		built.append(buildVariant(rootDir / 'pulseaudio', baseImage, tag, args.dry_run))
 		descriptions[built[-1]] = descriptions[baseImage].replace(' (no audio support)', ' + PulseAudio Client + PulseAudio Server')
 	
 	# Add the "-noaudio" tags to our tag list immediately after the non-suffixed tags
@@ -109,14 +129,14 @@ for ubuntuRelease in RELEASES:
 	# Build a version of each image that supports audio by using the host system's PulseAudio server
 	for baseImage in noAudio:
 		tag = baseImage.replace('-noaudio', '-hostaudio')
-		built.append(buildImage(join(rootDir, 'hostaudio'), baseImage, tag, args.dry_run))
+		built.append(buildVariant(rootDir / 'hostaudio', baseImage, tag, args.dry_run))
 		descriptions[built[-1]] = descriptions[baseImage].replace(' (no audio support)', ' + PulseAudio Client (uses host PulseAudio Server)')
 	
 	# Build a VirtualGL-enabled version of the non-suffixed images that run a PulseAudio server inside the container
 	bases = [image for image in built.copy() if ubuntuRelease in image and not image.endswith('audio')]
 	for baseImage in bases:
 		tag = baseImage + '-virtualgl'
-		built.append(buildImage(join(rootDir, 'virtualgl'), baseImage, tag, args.dry_run))
+		built.append(buildVariant(rootDir / 'virtualgl', baseImage, tag, args.dry_run))
 		descriptions[built[-1]] = descriptions[baseImage] + ' + VirtualGL'
 
 # Tag the Vulkan variant of the Ubuntu 20.04 base image as our "latest" tag
