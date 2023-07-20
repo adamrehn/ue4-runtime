@@ -140,12 +140,12 @@ for ubuntuRelease in RELEASES:
 		built.append(buildVariant(rootDir / 'hostaudio', baseImage, tag, args.dry_run))
 		descriptions[built[-1]] = descriptions[baseImage].replace(' (no audio support)', ' + PulseAudio Client (uses host PulseAudio Server)')
 	
-	# Build a VirtualGL-enabled version of the non-suffixed images that run a PulseAudio server inside the container
-	bases = [image for image in built.copy() if ubuntuRelease in image and not image.endswith('audio')]
+	# Build an X11-enabled version of the "-hostaudio" images
+	bases = [image for image in built.copy() if ubuntuRelease in image and image.endswith('-hostaudio')]
 	for baseImage in bases:
-		tag = baseImage + '-virtualgl'
-		built.append(buildVariant(rootDir / 'virtualgl', baseImage, tag, args.dry_run))
-		descriptions[built[-1]] = descriptions[baseImage] + ' + VirtualGL'
+		tag = baseImage.replace('-hostaudio', '-x11')
+		built.append(buildVariant(rootDir / 'x11', baseImage, tag, args.dry_run))
+		descriptions[built[-1]] = descriptions[baseImage] + ' + X11'
 
 # Tag the Vulkan variant of the Ubuntu 20.04 base image as our "latest" tag
 latest = '{}:latest'.format(PREFIX)
@@ -155,10 +155,6 @@ aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ALIAS_RELEASE), latest, ar
 for ubuntuRelease in RELEASES:
 	aliases.append(tagImage('{}:{}-vulkan'.format(PREFIX, ubuntuRelease), '{}:{}-opengl'.format(PREFIX, ubuntuRelease), args.dry_run))
 
-# Tag the Vulkan variant of the VirtualGL image with a non-suffixed tag
-nonSuffixedVgl = '{}:virtualgl'.format(PREFIX)
-aliases.append(tagImage('{}:{}-vulkan-virtualgl'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
-
 # Tag the Vulkan variant of the "noaudio" image with a non-suffixed tag
 nonSuffixedNoAudio = '{}:noaudio'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan-noaudio'.format(PREFIX, ALIAS_RELEASE), nonSuffixedNoAudio, args.dry_run))
@@ -166,6 +162,10 @@ aliases.append(tagImage('{}:{}-vulkan-noaudio'.format(PREFIX, ALIAS_RELEASE), no
 # Tag the Vulkan variant of the host audio image with a non-suffixed tag
 nonSuffixedHostAudio = '{}:hostaudio'.format(PREFIX)
 aliases.append(tagImage('{}:{}-vulkan-hostaudio'.format(PREFIX, ALIAS_RELEASE), nonSuffixedHostAudio, args.dry_run))
+
+# Tag the Vulkan variant of the X11 image with a non-suffixed tag
+nonSuffixedVgl = '{}:x11'.format(PREFIX)
+aliases.append(tagImage('{}:{}-vulkan-x11'.format(PREFIX, ALIAS_RELEASE), nonSuffixedVgl, args.dry_run))
 
 # Print the list of built images
 print('The following images were built:\n')
