@@ -2,6 +2,7 @@
 import argparse, requests, shutil, subprocess
 from itertools import chain
 from natsort import natsorted
+from packaging.version import Version
 from pathlib import Path
 
 
@@ -87,6 +88,14 @@ for ubuntuRelease in RELEASES:
 	cudaSuffix = '-base-ubuntu{}'.format(ubuntuRelease)
 	cudaTags = natsorted([tag for tag in listTags('nvidia/cuda') if tag.endswith(cudaSuffix)])
 	
+	# Identify the newest minor release for each major CUDA release
+	cudaVersions = list([Version(tag.replace(cudaSuffix, '')) for tag in cudaTags])
+	majorVersions = set([version.major for version in cudaVersions])
+	minorVersions = {
+		majorVersion: str(max([version for version in cudaVersions if version.major == majorVersion]))
+		for majorVersion in majorVersions
+	}
+	
 	# Clone the source code for the `nvidia/opengl` base image for the current Ubuntu release
 	openglDir = externalDir / 'opengl_{}'.format(ubuntuRelease)
 	if not openglDir.exists() and not args.dry_run:
@@ -96,17 +105,16 @@ for ubuntuRelease in RELEASES:
 	# Generate our list of ue4-runtime image variants and corresponding base images
 	variants = {'vulkan': 'nvidia/opengl:1.2-glvnd-runtime-ubuntu{}'.format(ubuntuRelease)}
 	variantDescriptions = {'vulkan': ''}
-	for tag in cudaTags:
+	for majorVersion, minorVersion in minorVersions.items():
 		
 		# Record the variant details
-		cudaVersion = tag.replace(cudaSuffix, '')
-		variant = 'cudagl{}'.format(cudaVersion)
-		variants[variant] = 'nvidia/cudagl:{}'.format(tag)
-		variantDescriptions[variant] = ' + CUDA {}'.format(cudaVersion)
+		variant = 'cudagl{}'.format(majorVersion)
+		variants[variant] = 'nvidia/cudagl:{}{}'.format(majorVersion, cudaSuffix)
+		variantDescriptions[variant] = ' + CUDA {}'.format(minorVersion)
 		
 		# Build our own version of the `nvidia/cudagl` base image for the given version of CUDA, since NVIDIA is not currently updating the upstream image
-		buildImage(openglDir / 'base', 'nvidia/cudagl:{}-base-ubuntu{}'.format(cudaVersion, ubuntuRelease), {'from': 'nvidia/cuda:{}'.format(tag)}, args.dry_run)
-		buildImage(openglDir / 'glvnd' / 'runtime', 'nvidia/cudagl:{}-runtime-ubuntu{}'.format(cudaVersion, ubuntuRelease), {'from': 'nvidia/cudagl:{}-base-ubuntu{}'.format(cudaVersion, ubuntuRelease), 'LIBGLVND_VERSION': '1.2'}, args.dry_run)
+		buildImage(openglDir / 'base', 'nvidia/cudagl:{}-base-ubuntu{}'.format(majorVersion, ubuntuRelease), {'from': 'nvidia/cuda:{}{}'.format(minorVersion, cudaSuffix)}, args.dry_run)
+		buildImage(openglDir / 'glvnd' / 'runtime', 'nvidia/cudagl:{}-runtime-ubuntu{}'.format(majorVersion, ubuntuRelease), {'from': 'nvidia/cudagl:{}-base-ubuntu{}'.format(majorVersion, ubuntuRelease), 'LIBGLVND_VERSION': '1.2'}, args.dry_run)
 	
 	# Build the base image for each variant (the "noaudio" version without PulseAudio)
 	# (Add these to a temporary list so we can place them after the non-suffixed tags when we print our tag list)
