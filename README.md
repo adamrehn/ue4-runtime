@@ -92,7 +92,7 @@ By default, the container images are configured to spawn a PulseAudio server on 
 
 Building the container images from source requires Python 3.5 or newer and the dependency packages listed in [requirements.txt](https://github.com/adamrehn/ue4-runtime/blob/master/requirements.txt).
 
-To build the images, simply run `build.py`. This will automatically query Docker Hub to retrieve the list of available [nvidia/cudagl](https://hub.docker.com/r/nvidia/cudagl) base images based on Ubuntu LTS releases and build all variants of the `adamrehn/ue4-runtime` image accordingly.
+To build the images, simply run `build.py`. This will automatically query Docker Hub to retrieve the list of available [nvidia/cuda](https://hub.docker.com/r/nvidia/cuda) base images based on Ubuntu LTS releases and build all variants of the `adamrehn/ue4-runtime` image accordingly.
 
 
 ## Legal
